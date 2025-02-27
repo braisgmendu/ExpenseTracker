@@ -45,6 +45,19 @@ public class FileHandler {
             e.printStackTrace();
         }
     }
+
+    public static void exportExpenses(List<Expense> expenses, String fileName) throws IOException {
+        try(FileWriter writer = new FileWriter(fileName)) {
+            writer.append("ID,Description,Amount,Category,Date\n");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            for (Expense expense : expenses) {
+                writer.append(expense.getId()+","+expense.getDescription()+","+expense.getAmount()+","+expense.getCategory()+","+expense.getModified().format(formatter)+"\n");
+            }
+            System.out.println("Expenses exported to " + fileName);
+        }catch (IOException e){
+            System.out.println("Export error " + e.getMessage());
+        }
+    }
 }
 class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
     // formatea para que se vea yyyy-MM-dd'T'HH:mm:ss

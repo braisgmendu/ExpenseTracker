@@ -111,7 +111,11 @@ public class ExpenseCLI {
                 sc.nextLine(); // Limpiar el buffer
                 expenseManager.sumaryForMonth(month);
                 break;
-
+            case "export":
+                System.out.println("Enter name file for export.");
+                String name = sc.nextLine();
+                expenseManager.exportExpenses(name);
+                break;
             default:
                 System.out.println("Unexpected command: " + command);
                 break;

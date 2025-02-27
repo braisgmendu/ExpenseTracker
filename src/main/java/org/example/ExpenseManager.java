@@ -83,4 +83,8 @@ public class ExpenseManager {
         return expenses.stream().filter(expense -> expense.getId() == id).findFirst().orElse(null);
 
     }
+
+    public void exportExpenses(String fileName) throws IOException {
+        FileHandler.exportExpenses(expenses,fileName);
+    }
 }
