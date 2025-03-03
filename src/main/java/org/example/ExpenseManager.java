@@ -4,8 +4,11 @@ import java.util.*;
 public class ExpenseManager {
     private List<Expense> expenses;
 
+    private Map<Integer, Double> monthBudget = new HashMap<>();
+
     public ExpenseManager() throws IOException {
         this.expenses = FileHandler.readExpenses();
+        this.monthBudget = FileHandler.readBudget();
     }
 
     public void addExpense(String description, double amount, String category) {
@@ -75,8 +78,10 @@ public class ExpenseManager {
             if(expense.getCreated().getMonthValue() == month){
                 totalMonth += expense.getAmount();
             }
+
         }
-        System.out.println("Total expenses for " + monthName[month-1] + ": " + totalMonth);
+        System.out.println("Total expenses for " + monthName[month-1] + ": " + totalMonth + ", Budget: " + monthBudget.get(month));
+        checkBudget(month,totalMonth);
     }
 
     public Expense getExpense(int id) {
@@ -86,5 +91,20 @@ public class ExpenseManager {
 
     public void exportExpenses(String fileName) throws IOException {
         FileHandler.exportExpenses(expenses,fileName);
+    }
+
+    public void setBudget(int month, double budget) throws IOException {
+        monthBudget.put(month,budget);
+        FileHandler.writeBudget(monthBudget);
+        System.out.println("Budget set to month " + month + ": " + budget);
+    }
+    public void checkBudget(int month, double totalExpenses) {
+        if(monthBudget.containsKey(month)){
+            double budget = monthBudget.get(month);
+            if(totalExpenses > budget){
+                System.out.println("Warning! You have exceeded the budget for month " + month + " .Budget: " + budget
+                        + "€ , Expenses: " + totalExpenses + "€.");
+            }
+        }
     }
 }

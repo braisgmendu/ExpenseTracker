@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 public class FileHandler {
     private static Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,new LocalDateTimeAdapter()).create();
     private static final String FILENAME = "expenses.json";
+    private static final String BUDGET_FILE = "budget.json";
 
     public static List<Expense> readExpenses() throws IOException {
         if (!Files.exists(Paths.get(FILENAME))) {
@@ -56,6 +57,33 @@ public class FileHandler {
             System.out.println("Expenses exported to " + fileName);
         }catch (IOException e){
             System.out.println("Export error " + e.getMessage());
+        }
+    }
+    public static void writeBudget(Map<Integer,Double> budget) throws IOException {
+        try(FileWriter writer = new FileWriter(BUDGET_FILE)) {
+            gson.toJson(budget, writer);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    public static Map<Integer,Double> readBudget() throws IOException {
+        if (!Files.exists(Paths.get(BUDGET_FILE))) {
+            Files.createFile(Paths.get(BUDGET_FILE));
+            return new HashMap<>();
+        }
+
+        try{
+            String json = new String(Files.readAllBytes(Paths.get(BUDGET_FILE)));
+
+            if(json.trim().isEmpty()){
+                return new HashMap<>();
+            }
+            HashMap<Integer,Double> budgets = gson.fromJson(json, new TypeToken<Map<Integer,Double>>(){}.getType());
+
+            return budgets != null ? budgets : new HashMap<>();
+        }catch (IOException e){
+            e.printStackTrace();
+            return new HashMap<>();
         }
     }
 }

@@ -116,6 +116,15 @@ public class ExpenseCLI {
                 String name = sc.nextLine();
                 expenseManager.exportExpenses(name);
                 break;
+            case "budget":
+                System.out.println("Enter month to be budgeted: ");
+                int monthBudget = sc.nextInt();
+                sc.nextLine();
+                System.out.println("Enter amount to be budgeted: ");
+                double budget = sc.nextDouble();
+                sc.nextLine();
+                expenseManager.setBudget(monthBudget, budget);
+                break;
             default:
                 System.out.println("Unexpected command: " + command);
                 break;
