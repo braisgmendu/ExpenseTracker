@@ -59,11 +59,11 @@ Antes de ejecutar la aplicación, asegúrate de tener lo siguiente:
     ```bash
    java -cp out org.expensetracker.ExpenseCLI summary-month
 7. Exportar los gastos a CSV
-  ```bash
+    ```bash
    java -cp out org.expensetracker.ExpenseCLI export
-  ```
+    ```
 8. Establecer presupuesto a un mes
-   ```bash
+    ```bash
    java -cp out org.expensetracker.ExpenseCLI budget
 
 ---
