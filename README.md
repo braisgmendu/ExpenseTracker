@@ -92,3 +92,7 @@ Algunas categorías comunes son:
   - `Cantidad`
   - `Categoría`
   - `Fecha`
+    
+---
+
+[Visita el sitio web oficial de la idea del projecto](https://roadmap.sh/projects/expense-tracker)
